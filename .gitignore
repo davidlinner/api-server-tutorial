@@ -1,0 +1,14 @@
+# Modules
+node_modules
+jspm_packages
+
+# Logs
+logs
+*.log
+
+# IDE
+.idea
+*.iml
+
+.vscode
+.history
