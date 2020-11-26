@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main file</title>
+</head>
+<body>
+    <h1>Current Items</h1>
+    <ul id="list">
+    </ul>
+    <button id="reloadButton">Refresh</button>
+
+    <p id="error-message" style="display: none; color: red">
+        Es ist ein Fehler aufgetreten.
+    </p>
+
+    <script type="application/javascript">
+
+        async function reloadItems() {
+            try {
+                const response = await fetch('//localhost:4000/items');
+
+                if (response.ok) {
+                    const items = await response.json();
+
+                    document.querySelector('#list').innerHTML = Object.entries(items)
+                        .map(([id, item]) => `<li id="${id}">${item.name}</li>`)
+                        .join('');
+
+                } else {
+                    showError();
+                }
+            } catch(e) {
+                console.log(e); // for debugging
+                showError();
+            }
+        }
+
+        function showError(){
+            document.querySelector('#error-message').style.display = 'block';
+        }
+
+        document.querySelector('#reloadButton').addEventListener('click', reloadItems);
+
+        // we call this once when the page is loaded
+        reloadItems();
+    </script>
+</body>
+</html>
