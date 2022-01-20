@@ -42,6 +42,10 @@ app.get('/json', (request, response) => {
     response.json({text: 'hello fetch!', num: 123});
 });
 
+app.get('/shopping-cart', (request, response) => {
+    response.json(INGREDIENTS);
+});
+
 app.get('/html', (request, response) => {
     response
         .status(200)
