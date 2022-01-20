@@ -1,10 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+app.use(express.json());
 
 const PORT = process.env.PORT || 4000
 
-const INGREDIENTS = [
+const ingredients = [
     {
         title: 'Flour',
         quantity: 100,
@@ -43,8 +44,15 @@ app.get('/json', (request, response) => {
 });
 
 app.get('/shopping-cart', (request, response) => {
-    response.json(INGREDIENTS);
+    response.json(ingredients);
 });
+
+app.post('/shopping-cart', (request, response) => {
+    const data = request.body;
+    ingredients.push(data);
+    response.status(200).send();
+});
+
 
 app.get('/html', (request, response) => {
     response
@@ -55,8 +63,8 @@ app.get('/html', (request, response) => {
 
 app.get('/ingredients/:i', (request, response) => {
     const {i} = request.params;
-    if(i >= 0 && i < INGREDIENTS.length) {
-        response.json(INGREDIENTS[i]);
+    if(i >= 0 && i < ingredients.length) {
+        response.json(ingredients[i]);
     } else {
         response.status(404).end();
     }
